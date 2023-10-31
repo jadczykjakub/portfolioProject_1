@@ -1,0 +1,23 @@
+{
+  "name": "training_projects_1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jadczykjakub/portfolioProject_1.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jadczykjakub/portfolioProject_1/issues"
+  },
+  "homepage": "https://github.com/jadczykjakub/portfolioProject_1#readme",
+  "devDependencies": {
+    "husky": "^8.0.0"
+  }
+}
