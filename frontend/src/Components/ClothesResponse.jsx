@@ -6,6 +6,7 @@ export default function ClothesResponse() {
 
   return (
     <div>
+      <div>{loading && <div>loading...</div>}</div>
       <div>{!loading && error ? <div> {error} </div> : null}</div>
       <div>
         {response === 'add'
