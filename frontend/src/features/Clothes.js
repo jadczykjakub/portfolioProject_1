@@ -17,6 +17,17 @@ export const fetchClothes = createAsyncThunk(
   },
 );
 
+export const addClothes = createAsyncThunk(
+  'clothes/addClothes',
+  async (data) => {
+    const response = await axios.post('http://localhost:8000/api/clothes', {
+      name: data.name,
+      season: data.season,
+    });
+    return response.data.response;
+  },
+);
+
 export const clothesSlice = createSlice({
   name: 'clothes',
   initialState: clothesState,
@@ -32,6 +43,20 @@ export const clothesSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder
+      .addCase(addClothes.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addClothes.fulfilled, (state, action) => {
+        state.loading = false;
+        state.clothesList.push(action.payload);
+        state.response = 'add';
+      })
+      .addCase(addClothes.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
+
     builder
       .addCase(fetchClothes.fulfilled, (state, action) => {
         state.loading = false;
