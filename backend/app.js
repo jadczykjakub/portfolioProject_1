@@ -5,6 +5,15 @@ const cors = require("cors");
 const app = express();
 app.use(express.json());
 
+const corsOptions = {
+  origin: "http://localhost:3000",
+  methods: "GET,PUT,POST,DELETE",
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions));
+
 const connectDB = async () => {
   try {
     const db = await mongoose.connect("mongodb://127.0.0.1:27017/wardrobe");
@@ -62,26 +71,26 @@ app.post("/api/clothes", async (req, res) => {
   }
 });
 
-// app.put("/api/clothes/:id", async (req, res) => {
-//   try {
-//     const updatedItem = await Item.findByIdAndUpdate(req.params.id, req.body, {
-//       new: true,
-//     });
-//     res.status(200).send({ response: updatedItem });
-//   } catch (err) {
-//     res.status(500).send({ response: err.message });
-//   }
-// });
+app.put("/api/clothes/:id", async (req, res) => {
+  try {
+    const updatedItem = await Item.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    res.status(200).send({ response: updatedItem });
+  } catch (err) {
+    res.status(500).send({ response: err.message });
+  }
+});
 
-// app.delete("/api/clothes/:id", async (req, res) => {
-//   try {
-//     await Item.findByIdAndRemove(req.params.id).then((response) => {
-//       res.status(200).send({ response: req.params.id });
-//     });
-//   } catch (err) {
-//     res.status(500).send({ response: err.message });
-//   }
-// });
+app.delete("/api/clothes/:id", async (req, res) => {
+  try {
+    await Item.findByIdAndRemove(req.params.id).then((response) => {
+      res.status(200).send({ response: req.params.id });
+    });
+  } catch (err) {
+    res.status(500).send({ response: err.message });
+  }
+});
 
 app.listen(8000, () => {
   console.log(`Server is running on PORT ${8000}`);
