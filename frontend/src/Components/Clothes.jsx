@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addClothes, fetchClothes } from '../features/Clothes';
+import { fetchClothes, removeClothes } from '../features/Clothes';
+import AddClothes from './AddClothes';
 
 export default function Clothes() {
   const { loading, clothesList, error, updateState, response } = useSelector(
@@ -13,43 +14,29 @@ export default function Clothes() {
     dispatch(fetchClothes());
   }, [dispatch]);
 
-  const [clothesName, setClothesName] = useState('');
-  const [clothesSeason, setClothesSeason] = useState('');
+  const [clothesToDelete, setClothesToDelete] = useState('');
 
-  const handleClothesNameChange = (event) => {
-    setClothesName(event.target.value);
+  const handleClothesDeleteChange = (event) => {
+    setClothesToDelete(event.target.value);
   };
 
-  const handleClothesSeasonChange = (event) => {
-    setClothesSeason(event.target.value);
-  };
-
-  const handleAddClothes = (e) => {
-    dispatch(addClothes({ name: clothesName, season: clothesSeason }));
-    setClothesName('');
-    setClothesSeason('');
+  const handleClothesRemove = () => {
+    dispatch(removeClothes);
   };
 
   return (
     <div>
-      Clothes{' '}
       <div>
-        Add clothes
-        <div>
-          <input
-            type="text"
-            value={clothesName}
-            onChange={handleClothesNameChange}
-            placeholder="Enter your data"
-          />
-          <input
-            type="text"
-            value={clothesSeason}
-            onChange={handleClothesSeasonChange}
-            placeholder="Enter your data"
-          />
-          <button onClick={handleAddClothes}>Add clothes</button>
-        </div>
+        Add Clothes <AddClothes />
+      </div>
+      <div>
+        <input
+          type="text"
+          value={clothesToDelete}
+          onChange={setClothesToDelete}
+          placeholder="id of clothes"
+        />
+        <button onClick={handleClothesDeleteChange}>Remove clothe</button>
       </div>
       <div>{!loading && error ? <div> {error} </div> : null}</div>
       <div>
