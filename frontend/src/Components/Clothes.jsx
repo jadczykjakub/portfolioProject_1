@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addClothes, fetchClothes } from '../features/Clothes';
 
-
 export default function Clothes() {
   const { loading, clothesList, error, updateState, response } = useSelector(
     (state) => state.clothes,
