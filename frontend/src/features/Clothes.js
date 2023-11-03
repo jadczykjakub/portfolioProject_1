@@ -28,6 +28,16 @@ export const addClothes = createAsyncThunk(
   },
 );
 
+export const removeClothes = createAsyncThunk(
+  'clothes/removeClothes',
+  async (data) => {
+    const response = await axios.delete(
+      `http://localhost:8000/api/clothes/${data}`,
+    );
+    return response.data.response;
+  },
+);
+
 export const clothesSlice = createSlice({
   name: 'clothes',
   initialState: clothesState,
@@ -66,6 +76,13 @@ export const clothesSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       });
+
+    builder.addCase(removeClothes.fulfilled, (state, action) => {
+      state.clothesList = state.clothesList.filter(
+        (item) => item._id != action.payload,
+      );
+      state.response = 'delete';
+    });
   },
 });
 
