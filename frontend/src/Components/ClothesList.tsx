@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState, ChangeEvent } from 'react';
+import { useAppSelector, useAppDispatch } from '../app/hooks';
 import {
   fetchClothes,
   removeClothes,
@@ -7,32 +7,34 @@ import {
   changeStateFalse,
   modifiedClothes,
 } from '../features/Clothes';
+import { IClothes } from '../types/clothes';
+import { Season } from '../types/enums';
 
 export default function ClothesList() {
-  const [id, setId] = useState('');
+  const [id, setId] = useState<number>();
 
-  const { clothesList, updateState } = useSelector((state) => state.clothes);
-  const dispatch = useDispatch();
+  const { clothesList, updateState } = useAppSelector((state) => state.clothes);
+  const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchClothes());
   }, [dispatch, updateState]);
 
   const [clothesName, setClothesName] = useState('');
-  const [clothesSeason, setClothesSeason] = useState('');
-  const handleClothesNameChange = (event) => {
+  const [clothesSeason, setClothesSeason] = useState<Season>(Season.Winter);
+  const handleClothesNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setClothesName(event.target.value);
   };
 
-  const handleClothesSeasonChange = (event) => {
-    setClothesSeason(event.target.value);
+  const handleClothesSeasonChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setClothesSeason(event.target.value as Season);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: number) => {
     dispatch(removeClothes(id));
   };
 
-  const handleUpdate = (item) => {
-    setId(item._id);
+  const handleUpdate = (item: IClothes) => {
+    setId(Number(item._id));
     setClothesName(item.name);
     setClothesSeason(item.season);
     dispatch(changeStateTrue());
@@ -40,12 +42,16 @@ export default function ClothesList() {
 
   const updateClothes = () => {
     dispatch(
-      modifiedClothes({ id: id, name: clothesName, season: clothesSeason }),
+      modifiedClothes({
+        _id: Number(id),
+        name: clothesName,
+        season: clothesSeason,
+      }),
     );
     dispatch(changeStateFalse());
-    setId('');
+    setId(undefined);
     setClothesName('');
-    setClothesSeason('');
+    setClothesSeason(Season.Winter);
   };
 
   return (
@@ -78,7 +84,9 @@ export default function ClothesList() {
               {item.name}/{item.season}
             </h2>
             <button onClick={() => handleUpdate(item)}>update</button>
-            <button onClick={() => handleDelete(item._id)}>Delete</button>
+            <button onClick={() => handleDelete(item._id as number)}>
+              Delete
+            </button>
           </div>
         ))}
       </div>

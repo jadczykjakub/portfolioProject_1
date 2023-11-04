@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { IClothes, IClothesState } from '../types/clothes';
 
-const clothesState = {
+const clothesState: IClothesState = {
   updateState: false,
   loading: false,
   clothesList: [],
@@ -19,7 +20,7 @@ export const fetchClothes = createAsyncThunk(
 
 export const addClothes = createAsyncThunk(
   'clothes/addClothes',
-  async (data) => {
+  async (data: IClothes) => {
     const response = await axios.post('http://localhost:8000/api/clothes', {
       name: data.name,
       season: data.season,
@@ -30,7 +31,7 @@ export const addClothes = createAsyncThunk(
 
 export const removeClothes = createAsyncThunk(
   'clothes/removeClothes',
-  async (data) => {
+  async (data: number) => {
     const response = await axios.delete(
       `http://localhost:8000/api/clothes/${data}`,
     );
@@ -40,12 +41,12 @@ export const removeClothes = createAsyncThunk(
 
 export const modifiedClothes = createAsyncThunk(
   'clothes/modifiedClothes',
-  async (data) => {
+  async (data: IClothes) => {
     const response = await axios.put(
-      `http://localhost:8000/api/clothes/${data.id}`,
+      `http://localhost:8000/api/clothes/${data._id}`,
       {
         name: data.name,
-        position: data.position,
+        season: data.season,
       },
     );
     return response.data.response;

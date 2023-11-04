@@ -1,24 +1,25 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { addClothes } from '../features/Clothes';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../app/hooks';
+import { Season } from '../types/enums';
 
 export default function AddClothes() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [clothesName, setClothesName] = useState('');
-  const [clothesSeason, setClothesSeason] = useState('');
-  const handleClothesNameChange = (event) => {
+  const [clothesSeason, setClothesSeason] = useState<Season>(Season.Winter);
+  const handleClothesNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setClothesName(event.target.value);
   };
 
-  const handleClothesSeasonChange = (event) => {
-    setClothesSeason(event.target.value);
+  const handleClothesSeasonChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setClothesSeason(event.target.value as Season);
   };
 
   const handleAddClothes = () => {
     dispatch(addClothes({ name: clothesName, season: clothesSeason }));
     setClothesName('');
-    setClothesSeason('');
+    setClothesSeason(Season.Winter);
   };
   return (
     <div>
