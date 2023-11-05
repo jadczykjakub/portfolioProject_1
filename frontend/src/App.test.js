@@ -12,4 +12,3 @@ test('renders app', () => {
   const linkElement = screen.getByText(/Clothes app/i);
   expect(linkElement).toBeInTheDocument();
 });
-
