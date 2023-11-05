@@ -1,8 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../app/hooks';
 
 export default function ClothesResponse() {
-  const { loading, error, response } = useSelector((state) => state.clothes);
+  const { loading, error, response } = useAppSelector((state) => state.clothes);
 
   return (
     <div>
