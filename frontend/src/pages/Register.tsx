@@ -7,10 +7,12 @@ export default function Register() {
   const navigate = useNavigate();
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
+    console.log(values, 'dupa');
+
     event.preventDefault();
     try {
       const { data } = await axios.post(
-        'http://localhost:3000/register',
+        'http://localhost:8000/api/register',
         {
           ...values,
         },
@@ -58,7 +60,7 @@ export default function Register() {
           <button type="submit">Register</button>
         </form>
         <div>
-          Already have account? <Link to={'/register'}> Login</Link>
+          Already have account? <Link to={'/login'}> Login</Link>
         </div>
       </div>
     </div>
