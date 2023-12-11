@@ -1,7 +1,12 @@
 import User from "../Models/authModel.js";
 
 export const registerUser = async (req, res) => {
-  console.log(res, req, "hello nie wczytuje tutaj kurwa");
+  console.log(
+    req.body.email,
+    req.body.password,
+    "hello nie wczytuje tutaj kurwa",
+  );
+
   try {
     const newUser = new User({
       email: req.body.email,
