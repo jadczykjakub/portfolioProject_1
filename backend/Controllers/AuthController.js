@@ -22,12 +22,12 @@ export const registerUser = async (req, res) => {
 
 export const loginUser = async (req, res) => {
   try {
-    const dupa = await User.findOne({
+    const user = await User.findOne({
       email: req.body.email,
       password: req.body.password,
     });
 
-    if (!dupa) res.status(404).send("User or password not correct");
+    if (!user) res.status(404).send("User or password not correct");
 
     return res.status(200).send({ response: req.body.email });
   } catch (err) {
