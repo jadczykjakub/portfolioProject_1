@@ -12,7 +12,7 @@ export default function Login() {
     event.preventDefault();
     try {
       const { data } = await axios.post(
-        'http://localhost:3000/login',
+        'http://localhost:8000/api/login',
         {
           ...values,
         },
