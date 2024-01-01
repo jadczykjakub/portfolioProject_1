@@ -1,4 +1,3 @@
-
 import jwt from "jsonwebtoken";
 
 export const checkUser = (req, res, next) => {
@@ -11,6 +10,7 @@ export const checkUser = (req, res, next) => {
       console.log("elo");
       if (err) {
         console.log("elo3");
+        console.log(res);
         // res.redirect("/dupa");
 
         //TODO what middleware do when not correct.
