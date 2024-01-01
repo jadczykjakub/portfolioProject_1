@@ -15,6 +15,7 @@ export const getClothes = async (req, res) => {
 };
 
 export const createClothes = async (req, res) => {
+  console.log("eldo");
   try {
     const newClothes = new Clothes({
       name: req.body.name,

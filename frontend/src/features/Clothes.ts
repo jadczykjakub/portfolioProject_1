@@ -13,7 +13,9 @@ const clothesState: IClothesState = {
 export const fetchClothes = createAsyncThunk(
   'clothes/fetchClothes',
   async () => {
-    const response = await axios.get('http://localhost:8000/api/clothes');
+    const response = await axios.get('http://localhost:8000/api/clothes', {
+      withCredentials: true,
+    });
     return response.data.response;
   },
 );

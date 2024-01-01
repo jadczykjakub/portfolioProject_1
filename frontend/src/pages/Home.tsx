@@ -1,5 +1,5 @@
 import React from 'react';
-import Clothes from '../Components/Clothes';
+import Clothes from './Clothes';
 
 function Home() {
   return (

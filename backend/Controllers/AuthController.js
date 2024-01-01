@@ -1,4 +1,5 @@
 import User from "../Models/authModel.js";
+import jwt from "jsonwebtoken";
 
 export const registerUser = async (req, res) => {
   const newUser = new User({
@@ -20,14 +21,25 @@ export const registerUser = async (req, res) => {
   }
 };
 
+const createToken = (email) => {
+  console.log(process.env.SECRET_KEY);
+
+  // @ts-ignore
+  return jwt.sign({ email }, process.env.SECRET_KEY, { expiresIn: 100000 });
+};
+
 export const loginUser = async (req, res) => {
   try {
-    const user = await User.findOne({
-      email: req.body.email,
-      password: req.body.password,
-    });
+    // @ts-ignore
+    const user = await User.loginUser(req.body.email, req.body.password);
 
     if (!user) res.status(404).send("User or password not correct");
+
+    const token = createToken(req.body.email);
+
+    res.cookie("jwt", token, {
+      httpOnly: false,
+    });
 
     return res.status(200).send({ response: req.body.email });
   } catch (err) {

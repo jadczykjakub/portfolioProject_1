@@ -1,10 +1,16 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-
+import { config } from "dotenv";
+import cookieParser from "cookie-parser";
+// var cookieParser = require('cookie-parser')
 import indexRoutes from "./routes/clothesRoutes.js";
 
 const app = express();
+config();
+
+app.use(cookieParser());
+
 app.use(express.json());
 
 const corsOptions = {
@@ -19,7 +25,9 @@ app.use(cors(corsOptions));
 
 const connectDB = async () => {
   try {
-    const db = await mongoose.connect("mongodb://127.0.0.1:27017/wardrobe");
+    console.log(process.env.MONGO_CONNECTION_STRING);
+    // @ts-ignore
+    const db = await mongoose.connect(process.env.MONGO_CONNECTION_STRING);
     console.log(`mongodb connected ${db.connection.host}`);
   } catch (err) {
     console.log(err);

@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import PrivateRoutes from './routes/privateRoutes';
 import PublicRoutes from './routes/publicRoutes';
 
-const isCheckAuth: boolean = false;
+const isCheckAuth: boolean = true;
 
 const CheckedPrivateRoutes = isCheckAuth ? PrivateRoutes() : [];
 

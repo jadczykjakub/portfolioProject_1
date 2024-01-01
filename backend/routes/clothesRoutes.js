@@ -1,4 +1,5 @@
 import Router from "express";
+import { checkUser } from "../Middleware/authMiddleware.js";
 
 import {
   createClothes,
@@ -11,8 +12,8 @@ import { registerUser, loginUser } from "../Controllers/AuthController.js";
 
 const router = Router();
 
-router.get("/api/clothes", getClothes);
-router.post("api/clothes", createClothes);
+router.get("/api/clothes", checkUser, getClothes);
+router.post("/api/clothes", createClothes);
 router.put("/api/clothes/:id", updateClothes);
 router.delete("/api/clothes/:id", removeClothes);
 router.post("/api/register", registerUser);

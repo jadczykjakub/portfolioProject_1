@@ -14,24 +14,26 @@ const userSchema = new mongoose.Schema({
 });
 
 // @ts-ignore
-// userSchema.pre("save", async function (next) {
-//   const salt = await bcrypt.genSalt();
-//   this.password = await bcrypt.hash(this.password, salt);
-//   next();
-// });
+userSchema.pre("save", async function (next) {
+  const salt = await bcrypt.genSalt();
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
 
-// userSchema.statics.login = async function (email, password) {
-//   // @ts-ignore
-//   const user = await this.findOne({ email });
-//   if (user) {
-//     // @ts-ignore
-//     const auth = await bcrypt.compare(password, user.password);
-//     if (auth) {
-//       return user;
-//     }
-//     throw Error("incorrect password");
-//   }
-//   throw Error("incorrect email");
-// };
+userSchema.statics.loginUser = async function (email, password) {
+
+  // @ts-ignore
+  const user = await this.findOne({ email });
+
+  if (user) {
+    // @ts-ignore
+    const auth = await bcrypt.compare(password, user.password);
+    if (auth) {
+      return user;
+    }
+    throw Error("incorrect password");
+  }
+  throw Error("incorrect email");
+};
 
 export default mongoose.model("Users", userSchema);
