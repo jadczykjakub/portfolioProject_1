@@ -1,4 +1,4 @@
-import User from "../Models/authModel.js";
+
 import jwt from "jsonwebtoken";
 
 export const checkUser = (req, res, next) => {
@@ -13,7 +13,7 @@ export const checkUser = (req, res, next) => {
         console.log("elo3");
         // res.redirect("/dupa");
 
-        //TODO what middleware do when not correct. 
+        //TODO what middleware do when not correct.
 
         console.log(err);
       }

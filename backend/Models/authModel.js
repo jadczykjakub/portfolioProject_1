@@ -21,7 +21,6 @@ userSchema.pre("save", async function (next) {
 });
 
 userSchema.statics.loginUser = async function (email, password) {
-
   // @ts-ignore
   const user = await this.findOne({ email });
 
